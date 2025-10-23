@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>מוקאפ נמוך‑נאמנות — כלי טיפולי‑חינוכי</title>
+  <style>
+    :root{
+      --bg:#f7f9fb;           /* רקע כללי */
+      --card:#ffffff;          /* כרטיס */
+      --ink:#1f2937;           /* טקסט */
+      --muted:#6b7280;         /* טקסט משני */
+      --line:#cbd5e1;          /* קווי מתאר */
+      --accent:#3b82f6;        /* כחול עדין */
+      --accent-2:#22c55e;      /* ירוק */
+      --accent-3:#f59e0b;      /* כתום */
+      --accent-4:#ef4444;      /* אדום */
+      --shade:#eef2f7;         /* אפור בהיר */
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+
+    /* סרגל עליון */
+    header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:2px dashed var(--line)}
+    .wrap{max-width:1220px;margin:0 auto;padding:12px 16px}
+    .bar{display:flex;gap:12px;align-items:center}
+    .brand{font-weight:800;letter-spacing:.3px;color:var(--accent)}
+    nav{margin-inline-start:auto;display:flex;gap:8px;flex-wrap:wrap}
+    nav button{border:2px dashed var(--line);background:#fff;padding:8px 12px;border-radius:10px;cursor:pointer}
+    nav button.active{background:var(--shade)}
+
+    /* מסכים */
+    .screen{display:none;padding:18px 4px 60px}
+    .screen.active{display:block}
+
+    /* גריד */
+    .grid{display:grid;gap:14px}
+    .cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:1000px){.cols-2,.cols-3{grid-template-columns:1fr}}
+
+    /* כרטיסים */
+    .card{background:var(--card);border:2px dashed var(--line);border-radius:14px;padding:14px}
+    .card h2,.card h3{margin:0 0 8px}
+    .muted{color:var(--muted);font-size:14px}
+
+    /* רכיבים */
+    label{display:block;font-weight:700;margin:10px 0 6px}
+    input,select,textarea{width:100%;border:2px dashed var(--line);background:#fff;padding:10px 12px;border-radius:10px}
+    textarea{min-height:120px;resize:vertical}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-block;border:2px dashed var(--line);padding:9px 12px;border-radius:999px;background:#fff;cursor:pointer}
+    .btn.primary{background:var(--accent);color:white;border-style:solid;border-color:var(--accent)}
+    .btn.soft{background:var(--shade)}
+    .btn.good{background:var(--accent-2);color:#fff;border-color:var(--accent-2)}
+    .btn.warn{background:var(--accent-3);color:#fff;border-color:var(--accent-3)}
+    .btn.bad{background:var(--accent-4);color:#fff;border-color:var(--accent-4)}
+    .pill{border:2px dashed var(--line);padding:4px 10px;border-radius:999px;font-size:12px;background:#fff}
+    .pill.info{border-color:var(--accent);color:var(--accent)}
+    .pill.warn{border-color:var(--accent-3);color:var(--accent-3)}
+
+    table{width:100%;border-collapse:collapse;font-size:15px}
+    th,td{border:2px dashed var(--line);padding:8px;text-align:right}
+
+    .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .kpi .card{text-align:center}
+    .kpi .num{font-size:22px;font-weight:800}
+
+    .placeholder{border:2px dashed #9aa4b2;border-radius:10px;padding:10px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap bar">
+      <div class="brand">AluTeach</div>
+      <nav aria-label="ניווט ראשי">
+        <button class="active" data-screen="login">כניסה</button>
+        <button data-screen="dashboard">לוח בקרה מטפל/ת</button>
+        <button data-screen="incident">פתיחת אירוע</button>
+        <button data-screen="analysis">ניתוח והצעות</button>
+        <button data-screen="feedback">משוב</button>
+        <button data-screen="supervisor">דשבורד מפקחת</button>
+        <button data-screen="admin">ניהול מערכת</button>
+        <button data-screen="child">פרופיל ילד/ה</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- כניסה -->
+    <section id="login" class="screen active" role="region" aria-label="מסך כניסה">
+      <div class="grid cols-2">
+        <div class="card">
+          <h2>כניסה</h2>
+          <p class="muted">הזן דוא"ל וסיסמה ובחר תפקיד.</p>
+          <label for="email">דוא"ל</label>
+          <input id="email" type="email" placeholder="therapist@example.org" />
+          <label for="pwd">סיסמה</label>
+          <input id="pwd" type="password" placeholder="••••••••" />
+          <label for="role">תפקיד</label>
+          <select id="role">
+            <option>מטפל/ת</option>
+            <option>גננת / סייעת</option>
+            <option>מדריך/ה מקצועי/ת</option>
+            <option>מפקח/ת גן</option>
+          </select>
+          <div class="row" style="margin-top:10px">
+            <button class="btn primary" onclick="go('dashboard')">כניסה</button>
+            <button class="btn soft">שכחתי סיסמה</button>
+          </div>
+        </div>
+        <div class="card">
+          <h2>הערות</h2>
+          <div class="placeholder">מוקאפ נמוך‑נאמנות. אפשר להוסיף SSO בעתיד.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- לוח בקרה מטפל/ת -->
+    <section id="dashboard" class="screen" role="region" aria-label="לוח בקרה מטפל/ת">
+      <div class="grid cols-3">
+        <div class="card">
+          <h2>פעולות מהירות</h2>
+          <div class="row">
+            <button class="btn primary" onclick="go('incident')">+ אירוע חדש</button>
+            <button class="btn soft" onclick="go('child')">ילדים</button>
+            <button class="btn soft" onclick="go('feedback')">משובים ממתינים</button>
+          </div>
+        </div>
+        <div class="card">
+          <h2>משוב נדרש</h2>
+          <ul>
+            <li>אירוע #1042 – ילד/ה א"א – <span class="pill warn">ממתין למשוב</span></li>
+            <li>אירוע #1036 – ילד/ה ב"ב – <span class="pill warn">נפתח היום</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>התערבויות אחרונות</h2>
+          <ul>
+            <li>פינת שקט + אוזניות – נסגר ✔</li>
+            <li>עדכון לוח חזותי – בטיפול</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h2>הילדים שלי</h2>
+        <table>
+          <thead>
+            <tr><th>שם</th><th>קבוצה</th><th>אירועים פתוחים</th><th>עדכון אחרון</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>א"א</td><td>כחול</td><td>1</td><td>היום</td><td><button class="btn soft" onclick="go('child')">פתח</button></td></tr>
+            <tr><td>ב"ב</td><td>אדום</td><td>0</td><td>אתמול</td><td><button class="btn soft" onclick="go('child')">פתח</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- פתיחת אירוע -->
+    <section id="incident" class="screen" role="region" aria-label="פתיחת אירוע">
+      <div class="grid cols-2">
+        <div class="card">
+          <h2>אירוע חדש</h2>
+          <label>ילד/ה</label>
+          <input placeholder="חיפוש לפי שם או מזהה" />
+          <div class="row">
+            <div style="flex:1">
+              <label>תאריך ושעה</label>
+              <input type="datetime-local" />
+            </div>
+            <div style="flex:1">
+              <label>הקשר פעילות</label>
+              <select>
+                <option>זמן מעגל</option>
+                <option>משחק חופשי</option>
+                <option>ארוחה</option>
+                <option>מעבר בין פעילויות</option>
+              </select>
+            </div>
+          </div>
+          <label>תיאור ההתנהגות</label>
+          <textarea placeholder="תאר/י מה קרה…"></textarea>
+          <label>תגים</label>
+          <input placeholder="לדוגמה: רגישות לרעש, מעבר" />
+          <div class="row" style="margin-top:10px">
+            <button class="btn primary" onclick="go('analysis')">ניתוח התנהגות</button>
+            <button class="btn soft">צרף/י מדיה</button>
+          </div>
+        </div>
+        <div class="card">
+          <h2>אירועים דומים מהעבר</h2>
+          <ul>
+            <li>שבוע שעבר – קושי במעבר – עזר לוח חזותי</li>
+            <li>לפני שבועיים – עומס רעשים – אוזניות + פינת שקט</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ניתוח והצעות -->
+    <section id="analysis" class="screen" role="region" aria-label="ניתוח והצעות">
+      <div class="grid cols-2">
+        <aside class="card">
+          <h3>שאלות מבהירות</h3>
+          <ol>
+            <li>האם התרחש שינוי פתאומי בשגרה?</li>
+            <li>האם היו טריגרים חושיים (רעש/אור/מגע)?</li>
+            <li>נראה ניסיון תקשורת מצד הילד?</li>
+          </ol>
+          <button class="btn soft" onclick="alert('נשמר (דמה)')">שמירת תשובות</button>
+        </aside>
+        <div class="grid">
+          <div class="card">
+            <h2>תחומי קושי מוצעים</h2>
+            <div class="row">
+              <span class="pill info">חושי</span>
+              <span class="pill info">קוגניטיבי</span>
+              <span class="pill info">תקשורתי‑חברתי</span>
+              <span class="pill info">רגשי</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>התערבויות מומלצות</h3>
+            <ul>
+              <li><strong>עדכון לוח חזותי</strong> — פירוק שלבים והוספת סמלים.</li>
+              <li><strong>פינת שקט</strong> — אוזניות להפחתת רעש; טיימר 5 דק׳.</li>
+              <li><strong>כרטיס "קודם‑אחר כך"</strong> — הבהרת רצף למשימות.</li>
+            </ul>
+            <label>הערות המטפל/ת והתאמות</label>
+            <textarea placeholder="התאמה לילד/ה ולסביבת הגן…"></textarea>
+            <div class="row" style="margin-top:10px">
+              <button class="btn good" onclick="go('feedback')">בחר/י המשך למשוב</button>
+              <button class="btn warn" onclick="alert('הופנה למומחה (דמה)')">הפניה למומחה</button>
+              <button class="btn bad" onclick="alert('סומן כלא נפתר (דמה)')">סימון "לא נפתר"</button>
+              <button class="btn soft" onclick="alert('נסגר ללא צורך בהתערבות (דמה)')">סגור — לא נדרשת התערבות</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- משוב -->
+    <section id="feedback" class="screen" role="region" aria-label="משוב">
+      <div class="grid cols-2">
+        <div class="card">
+          <h2>משוב על התערבות</h2>
+          <div class="placeholder">אירוע #1042 · עדכון לוח חזותי</div>
+          <label>דירוג הצלחה (1–5)</label>
+          <select>
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+          </select>
+          <label>מה עבד?</label>
+          <textarea></textarea>
+          <label>מה לא עבד?</label>
+          <textarea></textarea>
+          <div class="row" style="margin-top:10px">
+            <button class="btn good">סגירת אירוע</button>
+            <button class="btn soft">קבע/י מעקב</button>
+          </div>
+        </div>
+        <div class="card">
+          <h2>משובים ממתינים</h2>
+          <ul>
+            <li>אירוע #1036 — כרטיס קודם‑אחר כך — <span class="pill warn">להיום</span></li>
+            <li>אירוע #1021 — פינת שקט — <span class="pill warn">באיחור</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- דשבורד מפקחת -->
+    <section id="supervisor" class="screen" role="region" aria-label="דשבורד מפקחת">
+      <div class="card">
+        <h2>מסננים</h2>
+        <div class="row">
+          <input placeholder="שם גן" />
+          <input type="date" />
+          <input type="date" />
+          <button class="btn soft">החל</button>
+        </div>
+      </div>
+      <div class="kpi" style="margin-top:12px">
+        <div class="card"><div class="muted">סה"כ אירועים</div><div class="num">128</div></div>
+        <div class="card"><div class="muted">נסגרו</div><div class="num">96</div></div>
+        <div class="card"><div class="muted">זמן ממוצע</div><div class="num">1.8 ימים</div></div>
+        <div class="card"><div class="muted">שביעות רצון</div><div class="num">4.2</div></div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h2>רשימת אירועים</h2>
+        <table>
+          <thead><tr><th>מזהה</th><th>ילד/ה</th><th>גן</th><th>מצב</th><th>מטפל/ת</th><th>עודכן</th></tr></thead>
+          <tbody>
+            <tr><td>1042</td><td>א"א</td><td>כחול</td><td>ממתין למשוב</td><td>מטפלת א</td><td>היום</td></tr>
+            <tr><td>1036</td><td>ב"ב</td><td>אדום</td><td>בטיפול</td><td>מטפל ב</td><td>אתמול</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ניהול מערכת -->
+    <section id="admin" class="screen" role="region" aria-label="ניהול מערכת">
+      <div class="grid cols-2">
+        <div class="card">
+          <h2>הוספת משתמש</h2>
+          <label>שם מלא</label>
+          <input />
+          <label>דוא"ל</label>
+          <input type="email" />
+          <label>תפקיד</label>
+          <select>
+            <option>מטפל/ת</option>
+            <option>מדריך/ה מקצועי/ת</option>
+            <option>מפקח/ת גן</option>
+          </select>
+          <label>שייכות גן/ים</label>
+          <input placeholder="כחול; אדום" />
+          <div class="row" style="margin-top:10px"><button class="btn primary">צור/צרי משתמש</button></div>
+        </div>
+        <div class="card">
+          <h2>הוספת ילד/ה</h2>
+          <label>שם מלא / ראשי תיבות</label>
+          <input />
+          <label>גן</label>
+          <input />
+          <label>הערות</label>
+          <textarea></textarea>
+          <div class="row" style="margin-top:10px"><button class="btn primary">צור/צרי ילד/ה</button></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h2>ספריה</h2>
+        <table>
+          <thead><tr><th>סוג</th><th>שם</th><th>טווח אחריות</th><th>מצב</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>משתמש</td><td>מטפלת א</td><td>כחול</td><td>פעיל</td><td><button class="btn soft">עריכה</button></td></tr>
+            <tr><td>ילד/ה</td><td>א"א</td><td>כחול</td><td>פעיל</td><td><button class="btn soft">פתח</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- פרופיל ילד/ה -->
+    <section id="child" class="screen" role="region" aria-label="פרופיל ילד/ה">
+      <div class="grid cols-2">
+        <div class="card">
+          <h2>סקירת ילד/ה</h2>
+          <div class="placeholder">א"א · קבוצה כחול · גיל 5</div>
+          <h3 style="margin-top:10px">ציר זמן</h3>
+          <ul>
+            <li>היום – יושמה התערבות לוח חזותי</li>
+            <li>אתמול – קושי במעבר</li>
+            <li>שבוע שעבר – עומס רעשים</li>
+          </ul>
+          <div class="row" style="margin-top:10px">
+            <button class="btn soft" onclick="go('incident')">אירוע חדש</button>
+            <button class="btn soft" onclick="go('analysis')">ניתוח</button>
+          </div>
+        </div>
+        <div class="card">
+          <h2>תבניות ותגים</h2>
+          <div class="row">
+            <span class="pill">מעברים</span>
+            <span class="pill">רעש</span>
+            <span class="pill">תמיכה חזותית</span>
+          </div>
+          <h3 style="margin-top:10px">היסטוריית התערבויות</h3>
+          <ul>
+            <li>פינת שקט — הצלחה חלקית</li>
+            <li>אוזניות במעגל — טוב</li>
+            <li>כרטיס קודם‑אחר כך — טוב</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const buttons = document.querySelectorAll('nav button');
+    function go(id){
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      buttons.forEach(b=>b.classList.toggle('active', b.dataset.screen===id));
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    buttons.forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.screen)));
+  </script>
+</body>
+</html>
