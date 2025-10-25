@@ -3,81 +3,57 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>מוקאפ נמוך‑נאמנות — כלי טיפולי‑חינוכי</title>
+  <title>AluTeach — מוקאפ נמוך‑נאמנות (RTL)</title>
   <style>
-    :root{
-      --bg:#f7f9fb;           /* רקע כללי */
-      --card:#ffffff;          /* כרטיס */
-      --ink:#1f2937;           /* טקסט */
-      --muted:#6b7280;         /* טקסט משני */
-      --line:#cbd5e1;          /* קווי מתאר */
-      --accent:#3b82f6;        /* כחול עדין */
-      --accent-2:#22c55e;      /* ירוק */
-      --accent-3:#f59e0b;      /* כתום */
-      --accent-4:#ef4444;      /* אדום */
-      --shade:#eef2f7;         /* אפור בהיר */
-    }
+    :root{--bg:#f7f9fb;--card:#fff;--ink:#1f2937;--muted:#6b7280;--line:#cbd5e1;--accent:#3b82f6;--ok:#16a34a;--warn:#f59e0b;--err:#ef4444;--shade:#eef2f7}
     *{box-sizing:border-box}
     body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
-
-    /* סרגל עליון */
-    header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:2px dashed var(--line)}
+    header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:2px dashed var(--line)}
     .wrap{max-width:1220px;margin:0 auto;padding:12px 16px}
     .bar{display:flex;gap:12px;align-items:center}
-    .brand{font-weight:800;letter-spacing:.3px;color:var(--accent)}
+    .brand{font-weight:800;color:var(--accent)}
     nav{margin-inline-start:auto;display:flex;gap:8px;flex-wrap:wrap}
     nav button{border:2px dashed var(--line);background:#fff;padding:8px 12px;border-radius:10px;cursor:pointer}
     nav button.active{background:var(--shade)}
 
-    /* מסכים */
-    .screen{display:none;padding:18px 4px 60px}
-    .screen.active{display:block}
+    .screen{display:none !important;padding:18px 4px 60px}
+    .screen.active{display:block !important}
 
-    /* גריד */
     .grid{display:grid;gap:14px}
     .cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
     .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
     @media (max-width:1000px){.cols-2,.cols-3{grid-template-columns:1fr}}
 
-    /* כרטיסים */
     .card{background:var(--card);border:2px dashed var(--line);border-radius:14px;padding:14px}
     .card h2,.card h3{margin:0 0 8px}
     .muted{color:var(--muted);font-size:14px}
 
-    /* רכיבים */
     label{display:block;font-weight:700;margin:10px 0 6px}
     input,select,textarea{width:100%;border:2px dashed var(--line);background:#fff;padding:10px 12px;border-radius:10px}
     textarea{min-height:120px;resize:vertical}
     .row{display:flex;gap:10px;flex-wrap:wrap}
     .btn{display:inline-block;border:2px dashed var(--line);padding:9px 12px;border-radius:999px;background:#fff;cursor:pointer}
-    .btn.primary{background:var(--accent);color:white;border-style:solid;border-color:var(--accent)}
-    .btn.soft{background:var(--shade)}
-    .btn.good{background:var(--accent-2);color:#fff;border-color:var(--accent-2)}
-    .btn.warn{background:var(--accent-3);color:#fff;border-color:var(--accent-3)}
-    .btn.bad{background:var(--accent-4);color:#fff;border-color:var(--accent-4)}
+    .btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .btn.good{background:var(--ok);color:#fff;border-color:var(--ok)}
+    .btn.warn{background:var(--warn);color:#fff;border-color:var(--warn)}
+    .btn.bad{background:var(--err);color:#fff;border-color:var(--err)}
     .pill{border:2px dashed var(--line);padding:4px 10px;border-radius:999px;font-size:12px;background:#fff}
-    .pill.info{border-color:var(--accent);color:var(--accent)}
-    .pill.warn{border-color:var(--accent-3);color:var(--accent-3)}
-
-    table{width:100%;border-collapse:collapse;font-size:15px}
+    table{width:100%;border-collapse:collapse}
     th,td{border:2px dashed var(--line);padding:8px;text-align:right}
-
-    .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    .kpi .card{text-align:center}
-    .kpi .num{font-size:22px;font-weight:800}
-
     .placeholder{border:2px dashed #9aa4b2;border-radius:10px;padding:10px;color:var(--muted)}
   </style>
 </head>
 <body>
   <header>
     <div class="wrap bar">
-      <div class="brand">AluTeach</div>
+      <div class="brand">AluTeach · מוקאפ RTL</div>
       <nav aria-label="ניווט ראשי">
         <button class="active" data-screen="login">כניסה</button>
         <button data-screen="dashboard">לוח בקרה מטפל/ת</button>
         <button data-screen="incident">פתיחת אירוע</button>
-        <button data-screen="analysis">ניתוח והצעות</button>
+        <button data-screen="analysis-domain">ניתוח: תחום</button>
+        <button data-screen="analysis-questions">ניתוח: שאלות</button>
+        <button data-screen="analysis-suggestions">ניתוח: הצעות</button>
         <button data-screen="feedback">משוב</button>
         <button data-screen="supervisor">דשבורד מפקחת</button>
         <button data-screen="admin">ניהול מערכת</button>
@@ -92,7 +68,7 @@
       <div class="grid cols-2">
         <div class="card">
           <h2>כניסה</h2>
-          <p class="muted">הזן דוא"ל וסיסמה ובחר תפקיד.</p>
+          <p class="muted">הזן דוא"ל, סיסמה ובחר תפקיד.</p>
           <label for="email">דוא"ל</label>
           <input id="email" type="email" placeholder="therapist@example.org" />
           <label for="pwd">סיסמה</label>
@@ -106,12 +82,12 @@
           </select>
           <div class="row" style="margin-top:10px">
             <button class="btn primary" onclick="go('dashboard')">כניסה</button>
-            <button class="btn soft">שכחתי סיסמה</button>
+            <button class="btn">שכחתי סיסמה</button>
           </div>
         </div>
         <div class="card">
           <h2>הערות</h2>
-          <div class="placeholder">מוקאפ נמוך‑נאמנות. אפשר להוסיף SSO בעתיד.</div>
+          <div class="placeholder">זהו מוקאפ נמוך‑נאמנות. שדות/טקסטים דמו לצורכי המחשה.</div>
         </div>
       </div>
     </section>
@@ -123,15 +99,15 @@
           <h2>פעולות מהירות</h2>
           <div class="row">
             <button class="btn primary" onclick="go('incident')">+ אירוע חדש</button>
-            <button class="btn soft" onclick="go('child')">ילדים</button>
-            <button class="btn soft" onclick="go('feedback')">משובים ממתינים</button>
+            <button class="btn" onclick="go('child')">ילדים</button>
+            <button class="btn" onclick="go('feedback')">משובים ממתינים</button>
           </div>
         </div>
         <div class="card">
           <h2>משוב נדרש</h2>
           <ul>
-            <li>אירוע #1042 – ילד/ה א"א – <span class="pill warn">ממתין למשוב</span></li>
-            <li>אירוע #1036 – ילד/ה ב"ב – <span class="pill warn">נפתח היום</span></li>
+            <li>אירוע #1042 – ילד/ה א"א – <span class="pill">ממתין למשוב</span></li>
+            <li>אירוע #1036 – ילד/ה ב"ב – <span class="pill">להיום</span></li>
           </ul>
         </div>
         <div class="card">
@@ -141,19 +117,6 @@
             <li>עדכון לוח חזותי – בטיפול</li>
           </ul>
         </div>
-      </div>
-
-      <div class="card" style="margin-top:14px">
-        <h2>הילדים שלי</h2>
-        <table>
-          <thead>
-            <tr><th>שם</th><th>קבוצה</th><th>אירועים פתוחים</th><th>עדכון אחרון</th><th></th></tr>
-          </thead>
-          <tbody>
-            <tr><td>א"א</td><td>כחול</td><td>1</td><td>היום</td><td><button class="btn soft" onclick="go('child')">פתח</button></td></tr>
-            <tr><td>ב"ב</td><td>אדום</td><td>0</td><td>אתמול</td><td><button class="btn soft" onclick="go('child')">פתח</button></td></tr>
-          </tbody>
-        </table>
       </div>
     </section>
 
@@ -180,62 +143,88 @@
             </div>
           </div>
           <label>תיאור ההתנהגות</label>
-          <textarea placeholder="תאר/י מה קרה…"></textarea>
+          <textarea id="incident-desc" placeholder="תאר/י מה קרה…"></textarea>
           <label>תגים</label>
           <input placeholder="לדוגמה: רגישות לרעש, מעבר" />
           <div class="row" style="margin-top:10px">
-            <button class="btn primary" onclick="go('analysis')">ניתוח התנהגות</button>
-            <button class="btn soft">צרף/י מדיה</button>
+            <button class="btn primary" onclick="go('analysis-domain')">המשך לניתוח</button>
+            <button class="btn warn" onclick="alert('הפניה למומחה (דמה)')">הפניה למומחה</button>
+            <button class="btn" onclick="alert('נסגר — לא נדרשת התערבות (דמה)')">סגור — לא נדרשת התערבות</button>
           </div>
-        </div>
-        <div class="card">
-          <h2>אירועים דומים מהעבר</h2>
-          <ul>
-            <li>שבוע שעבר – קושי במעבר – עזר לוח חזותי</li>
-            <li>לפני שבועיים – עומס רעשים – אוזניות + פינת שקט</li>
-          </ul>
+          <p class="muted" style="margin-top:8px">הערה: אירועים דומים יוצגו בשלב השאלות.</p>
         </div>
       </div>
     </section>
 
-    <!-- ניתוח והצעות -->
-    <section id="analysis" class="screen" role="region" aria-label="ניתוח והצעות">
+    <!-- ניתוח — בחירת תחום -->
+    <section id="analysis-domain" class="screen" role="region" aria-label="ניתוח — בחירת תחום">
+      <div class="card">
+        <h2>ניתוח — בחירת תחום</h2>
+        <p class="muted">בחר/י תחום רלוונטי לפני המשך לשאלות.</p>
+      </div>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>בחר/י תחום</h3>
+          <div class="row">
+            <button class="btn" onclick="selectDomain('חושי')">חושי</button>
+            <button class="btn" onclick="selectDomain('קוגניטיבי')">קוגניטיבי</button>
+            <button class="btn" onclick="selectDomain('תקשורתי‑חברתי')">תקשורתי‑חברתי</button>
+            <button class="btn" onclick="selectDomain('רגשי')">רגשי</button>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <button class="btn primary" onclick="go('analysis-questions')">המשך לשאלות</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>תקציר האירוע</h3>
+          <div class="placeholder" id="desc-preview">(התיאור יופיע כאן לאחר ההקלדה במסך "פתיחת אירוע")</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ניתוח — שאלות מבהירות -->
+    <section id="analysis-questions" class="screen" role="region" aria-label="ניתוח — שאלות מבהירות">
+      <div class="card">
+        <h2>ניתוח — שאלות מבהירות</h2>
+        <p class="muted">ענה/י על מספר שאלות כדי לדייק את ההמלצות.</p>
+      </div>
       <div class="grid cols-2">
         <aside class="card">
           <h3>שאלות מבהירות</h3>
-          <ol>
-            <li>האם התרחש שינוי פתאומי בשגרה?</li>
-            <li>האם היו טריגרים חושיים (רעש/אור/מגע)?</li>
-            <li>נראה ניסיון תקשורת מצד הילד?</li>
-          </ol>
-          <button class="btn soft" onclick="alert('נשמר (דמה)')">שמירת תשובות</button>
+          <ol id="clarifying-qs"><li>— נטען לפי תחום —</li></ol>
+          <div class="row" style="margin-top:10px">
+            <button class="btn" onclick="go('analysis-domain')">חזרה לתחום</button>
+            <button class="btn primary" onclick="go('analysis-suggestions')">המשך להצעות</button>
+          </div>
         </aside>
-        <div class="grid">
-          <div class="card">
-            <h2>תחומי קושי מוצעים</h2>
-            <div class="row">
-              <span class="pill info">חושי</span>
-              <span class="pill info">קוגניטיבי</span>
-              <span class="pill info">תקשורתי‑חברתי</span>
-              <span class="pill info">רגשי</span>
-            </div>
+        <div class="card">
+          <h3>אירועים דומים מהעבר</h3>
+          <ul id="similar-incidents"><li>— יוצגו כאן אירועים דומים לאחר הזנת התיאור —</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ניתוח — התערבויות מומלצות -->
+    <section id="analysis-suggestions" class="screen" role="region" aria-label="ניתוח — התערבויות מומלצות">
+      <div class="card">
+        <h2>ניתוח — התערבויות מומלצות</h2>
+        <p class="muted">הצעות מבוססות על התחום והשאלות שנענו.</p>
+      </div>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>התערבויות מומלצות</h3>
+          <ul id="suggestions-list"><li>— ייטענו לאחר השלבים הקודמים —</li></ul>
+          <label>הערות והתאמות</label>
+          <textarea placeholder="התאמה לילד/ה ולסביבת הגן…"></textarea>
+          <div class="row" style="margin-top:10px">
+            <button class="btn good" onclick="go('feedback')">בחירה והמשך למשוב</button>
+            <button class="btn warn" onclick="alert('הפניה למומחה (דמה)')">הפניה למומחה</button>
+            <button class="btn bad" onclick="alert('סימון כלא נפתר (דמה)')">לא נפתר</button>
           </div>
-          <div class="card">
-            <h3>התערבויות מומלצות</h3>
-            <ul>
-              <li><strong>עדכון לוח חזותי</strong> — פירוק שלבים והוספת סמלים.</li>
-              <li><strong>פינת שקט</strong> — אוזניות להפחתת רעש; טיימר 5 דק׳.</li>
-              <li><strong>כרטיס "קודם‑אחר כך"</strong> — הבהרת רצף למשימות.</li>
-            </ul>
-            <label>הערות המטפל/ת והתאמות</label>
-            <textarea placeholder="התאמה לילד/ה ולסביבת הגן…"></textarea>
-            <div class="row" style="margin-top:10px">
-              <button class="btn good" onclick="go('feedback')">בחר/י המשך למשוב</button>
-              <button class="btn warn" onclick="alert('הופנה למומחה (דמה)')">הפניה למומחה</button>
-              <button class="btn bad" onclick="alert('סומן כלא נפתר (דמה)')">סימון "לא נפתר"</button>
-              <button class="btn soft" onclick="alert('נסגר ללא צורך בהתערבות (דמה)')">סגור — לא נדרשת התערבות</button>
-            </div>
-          </div>
+        </div>
+        <div class="card">
+          <h3>סיכום ביניים</h3>
+          <div class="placeholder" id="summary-box">תחום: —<br>נק׳ מפתח מהשאלות: —</div>
         </div>
       </div>
     </section>
@@ -247,23 +236,21 @@
           <h2>משוב על התערבות</h2>
           <div class="placeholder">אירוע #1042 · עדכון לוח חזותי</div>
           <label>דירוג הצלחה (1–5)</label>
-          <select>
-            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-          </select>
+          <select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
           <label>מה עבד?</label>
           <textarea></textarea>
           <label>מה לא עבד?</label>
           <textarea></textarea>
           <div class="row" style="margin-top:10px">
             <button class="btn good">סגירת אירוע</button>
-            <button class="btn soft">קבע/י מעקב</button>
+            <button class="btn">קבע/י מעקב</button>
           </div>
         </div>
         <div class="card">
           <h2>משובים ממתינים</h2>
           <ul>
-            <li>אירוע #1036 — כרטיס קודם‑אחר כך — <span class="pill warn">להיום</span></li>
-            <li>אירוע #1021 — פינת שקט — <span class="pill warn">באיחור</span></li>
+            <li>אירוע #1036 — כרטיס קודם‑אחר כך — <span class="pill">להיום</span></li>
+            <li>אירוע #1021 — פינת שקט — <span class="pill">באיחור</span></li>
           </ul>
         </div>
       </div>
@@ -277,14 +264,8 @@
           <input placeholder="שם גן" />
           <input type="date" />
           <input type="date" />
-          <button class="btn soft">החל</button>
+          <button class="btn">החל</button>
         </div>
-      </div>
-      <div class="kpi" style="margin-top:12px">
-        <div class="card"><div class="muted">סה"כ אירועים</div><div class="num">128</div></div>
-        <div class="card"><div class="muted">נסגרו</div><div class="num">96</div></div>
-        <div class="card"><div class="muted">זמן ממוצע</div><div class="num">1.8 ימים</div></div>
-        <div class="card"><div class="muted">שביעות רצון</div><div class="num">4.2</div></div>
       </div>
       <div class="card" style="margin-top:14px">
         <h2>רשימת אירועים</h2>
@@ -303,40 +284,20 @@
       <div class="grid cols-2">
         <div class="card">
           <h2>הוספת משתמש</h2>
-          <label>שם מלא</label>
-          <input />
-          <label>דוא"ל</label>
-          <input type="email" />
+          <label>שם מלא</label><input />
+          <label>דוא"ל</label><input type="email" />
           <label>תפקיד</label>
-          <select>
-            <option>מטפל/ת</option>
-            <option>מדריך/ה מקצועי/ת</option>
-            <option>מפקח/ת גן</option>
-          </select>
-          <label>שייכות גן/ים</label>
-          <input placeholder="כחול; אדום" />
+          <select><option>מטפל/ת</option><option>מדריך/ה מקצועי/ת</option><option>מפקח/ת גן</option></select>
+          <label>שייכות גן/ים</label><input placeholder="כחול; אדום" />
           <div class="row" style="margin-top:10px"><button class="btn primary">צור/צרי משתמש</button></div>
         </div>
         <div class="card">
           <h2>הוספת ילד/ה</h2>
-          <label>שם מלא / ראשי תיבות</label>
-          <input />
-          <label>גן</label>
-          <input />
-          <label>הערות</label>
-          <textarea></textarea>
+          <label>שם מלא / ראשי תיבות</label><input />
+          <label>גן</label><input />
+          <label>הערות</label><textarea></textarea>
           <div class="row" style="margin-top:10px"><button class="btn primary">צור/צרי ילד/ה</button></div>
         </div>
-      </div>
-      <div class="card" style="margin-top:14px">
-        <h2>ספריה</h2>
-        <table>
-          <thead><tr><th>סוג</th><th>שם</th><th>טווח אחריות</th><th>מצב</th><th></th></tr></thead>
-          <tbody>
-            <tr><td>משתמש</td><td>מטפלת א</td><td>כחול</td><td>פעיל</td><td><button class="btn soft">עריכה</button></td></tr>
-            <tr><td>ילד/ה</td><td>א"א</td><td>כחול</td><td>פעיל</td><td><button class="btn soft">פתח</button></td></tr>
-          </tbody>
-        </table>
       </div>
     </section>
 
@@ -353,17 +314,13 @@
             <li>שבוע שעבר – עומס רעשים</li>
           </ul>
           <div class="row" style="margin-top:10px">
-            <button class="btn soft" onclick="go('incident')">אירוע חדש</button>
-            <button class="btn soft" onclick="go('analysis')">ניתוח</button>
+            <button class="btn" onclick="go('incident')">אירוע חדש</button>
+            <button class="btn" onclick="go('analysis-domain')">ניתוח</button>
           </div>
         </div>
         <div class="card">
           <h2>תבניות ותגים</h2>
-          <div class="row">
-            <span class="pill">מעברים</span>
-            <span class="pill">רעש</span>
-            <span class="pill">תמיכה חזותית</span>
-          </div>
+          <div class="row"><span class="pill">מעברים</span><span class="pill">רעש</span><span class="pill">תמיכה חזותית</span></div>
           <h3 style="margin-top:10px">היסטוריית התערבויות</h3>
           <ul>
             <li>פינת שקט — הצלחה חלקית</li>
@@ -376,14 +333,50 @@
   </main>
 
   <script>
-    const buttons = document.querySelectorAll('nav button');
-    function go(id){
-      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      buttons.forEach(b=>b.classList.toggle('active', b.dataset.screen===id));
-      window.scrollTo({top:0,behavior:'smooth'});
+    // נווט: מסך אחד בלבד מוצג בכל רגע
+    function hideAll(){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); }
+    function go(id){ hideAll(); const el=document.getElementById(id); if(el){ el.classList.add('active'); };
+      document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active', b.dataset.screen===id));
+      onEnter(id); window.scrollTo({top:0,behavior:'smooth'}); }
+
+    // מצב
+    let selectedDomain=null;
+
+    function onEnter(id){
+      if(id==='analysis-domain'){
+        const desc=document.getElementById('incident-desc');
+        const prev=document.getElementById('desc-preview');
+        if(prev){ prev.textContent=(desc&&desc.value)?desc.value:'(אין תיאור זמין)'; }
+      }
+      if(id==='analysis-questions'){
+        const qs=document.getElementById('clarifying-qs');
+        if(qs){
+          if(selectedDomain==='חושי') qs.innerHTML='<li>היו רעשים חזקים/אורות?</li><li>קושי במגע/טקסטורה?</li><li>שינוי סביבתי פתאומי?</li>';
+          else if(selectedDomain==='קוגניטיבי') qs.innerHTML='<li>המשימה מורכבת מדי?</li><li>הוראות מרובות שלבים?</li><li>זמן תגובה איטי?</li>';
+          else if(selectedDomain==='תקשורתי‑חברתי') qs.innerHTML='<li>אינטראקציה עם ילדים?</li><li>הכוונה ברורה?</li><li>תסכול מחוסר הבנה?</li>';
+          else qs.innerHTML='<li>מצוקה רגשית?</li><li>טריגר רגשי?</li><li>שינוי מצב רוח?</li>';
+        }
+        const ul=document.getElementById('similar-incidents');
+        if(ul){ ul.innerHTML=''; ['שבוע שעבר – קושי במעבר – עזר לוח חזותי','לפני שבועיים – עומס רעשים – אוזניות + פינת שקט'].forEach(t=>{const li=document.createElement('li'); li.textContent=t; ul.appendChild(li);}); }
+      }
+      if(id==='analysis-suggestions'){
+        const list=document.getElementById('suggestions-list');
+        if(list){ let items=[]; if(selectedDomain==='חושי') items=['פינת שקט + אוזניות','הפחתת גירויים חזותיים','טיימר הפסקה קצרה'];
+          else if(selectedDomain==='קוגניטיבי') items=['פירוק משימה לשלבים','כרטיסי עזר חזותיים','זמני עיבוד ארוכים'];
+          else if(selectedDomain==='תקשורתי‑חברתי') items=['כרטיס "קודם‑אחר כך"','מודלינג חברתי','משחק תורות מודרך'];
+          else items=['תרגול הרגעה מונחה','פינת רגיעה','איתותים מוקדמים'];
+          list.innerHTML=items.map(t=>`<li><strong>${t}</strong></li>`).join(''); }
+        const sum=document.getElementById('summary-box'); if(sum){ sum.innerHTML=`תחום: ${selectedDomain||'—'}<br>נק׳ מפתח מהשאלות: —`; }
+      }
     }
-    buttons.forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.screen)));
+
+    function selectDomain(d){ selectedDomain=d; }
+
+    // אתחול
+    document.addEventListener('DOMContentLoaded',()=>{
+      hideAll(); document.getElementById('login').classList.add('active');
+      document.querySelectorAll('nav button').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.screen)));
+    });
   </script>
 </body>
 </html>
